@@ -5,21 +5,73 @@ const DashboardScr = () => {
 	// const [trackInfo, setTrackInfo] = useState([]);
 	// const [driverInfo, setDriverInfo] = useState([]);
 
-	const trackInfo = [
+	const headerDataTrack = {
+		track: "Suzuka",
+		game: "Gran Turismo",
+		car: "Mercedes F1",
+	};
+
+	const headerDataDriver = {
+		driver: "Jordan",
+	};
+
+	const lapDataTrack = [
 		{
-			id: "1",
-			title: "Track",
-			value: "Suzuka",
+			pos: 1,
+			name: "Jordan",
+			date: "2/25/2023",
+			time: "1:25.003",
+			gap: "-",
 		},
 		{
-			id: "2",
-			title: "Game",
-			value: "Gran Turismo",
+			pos: 2,
+			name: "Jordan",
+			date: "2/25/2023",
+			time: "1:35.003",
+			gap: "0:10.000",
 		},
 		{
-			id: "3",
-			title: "Car",
-			value: "F1 GTR",
+			pos: 3,
+			name: "Adam",
+			date: "2/25/2023",
+			time: "2:35.003",
+			gap: "2:10.00",
+		},
+		{
+			pos: 4,
+			name: "Adam",
+			date: "2/25/2023",
+			time: "2:35.003",
+			gap: "2:10.00",
+		},
+		{
+			pos: 5,
+			name: "Sean",
+			date: "2/25/2023",
+			time: "2:35.003",
+			gap: "2:10.00",
+		},
+		{
+			pos: 6,
+			name: "Sean",
+			date: "2/25/2023",
+			time: "2:35.003",
+			gap: "2:10.00",
+		},
+	];
+
+	const lapDataDriver = [
+		{
+			track: "Suzuka",
+			game: "Gran Turismo",
+			car: "Mercedes F1",
+			time: "1:35.147",
+		},
+		{
+			track: "Nordschleife",
+			game: "Gran Turismo",
+			car: "Mclaren F1 GTR",
+			time: "6:37.849",
 		},
 	];
 
@@ -27,12 +79,14 @@ const DashboardScr = () => {
 		<div className="dashboardScreenContainer">
 			<DashboardSection
 				title={"Lap Times by Track"}
-				info={trackInfo}
+				lapData={lapDataTrack}
+				headerData={headerDataTrack}
 				type={"track"}
 			/>
 			<DashboardSection
 				title={"Track Records by Driver"}
-				info={trackInfo}
+				lapData={lapDataDriver}
+				headerData={headerDataDriver}
 				type={"driver"}
 			/>
 		</div>

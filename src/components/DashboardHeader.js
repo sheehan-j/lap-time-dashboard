@@ -1,12 +1,18 @@
 import DashboardHeaderTitle from "./DashboardHeaderTitle";
-import DashboardHeaderInfoContainer from "./DashboardHeaderInfoContainer";
+import DashboardHeaderInfoContainerTrack from "./DashboardHeaderInfoContainerTrack";
+import DashboardHeaderInfoContainerDriver from "./DashboardHeaderInfoContainerDriver";
 
-const DashboardHeader = ({ title, info }) => {
+const DashboardHeader = ({ title, headerData, type }) => {
 	return (
 		<div className="dashboardHeader">
 			<DashboardHeaderTitle title={title} />
 			<div className="dashboardHeaderLine"></div>
-			<DashboardHeaderInfoContainer info={info} />
+			{type === "track" && (
+				<DashboardHeaderInfoContainerTrack headerData={headerData} />
+			)}
+			{type === "driver" && (
+				<DashboardHeaderInfoContainerDriver headerData={headerData} />
+			)}
 		</div>
 	);
 };
