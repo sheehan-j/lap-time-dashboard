@@ -1,5 +1,5 @@
 const AddScr = () => {
-	return <div>AddScr</div>;
+	return <div className="addScreenContainer">AddScr</div>;
 };
 
 export default AddScr;
