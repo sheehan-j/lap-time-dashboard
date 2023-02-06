@@ -2,11 +2,12 @@
 	"name": "lap-time-dashboard",
 	"version": "0.1.0",
 	"private": true,
-	"main": "components/index.js",
+	"main": "src/server.js",
 	"dependencies": {
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/react": "^13.4.0",
 		"@testing-library/user-event": "^13.5.0",
+		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
 		"mongoose": "^6.9.0",
@@ -21,7 +22,7 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"dev": "nodemon index"
+		"dev": "nodemon server"
 	},
 	"author": "Jordan Sheehan",
 	"eslintConfig": {
