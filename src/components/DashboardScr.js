@@ -58,6 +58,13 @@ const DashboardScr = () => {
 			time: "2:35.003",
 			gap: "2:10.00",
 		},
+		{
+			pos: 7,
+			name: "Sean",
+			date: "2/25/2023",
+			time: "2:35.003",
+			gap: "2:10.00",
+		},
 	];
 
 	const lapDataDriver = [

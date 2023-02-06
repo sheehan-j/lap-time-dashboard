@@ -23,7 +23,8 @@ app.use("/", express.static(path.join(__dirname, "..", "public")));
 
 // Routes
 app.use("/", require("./routes/root"));
-app.use("/test", require("./routes/api/test"));
+app.use("/times", require("./routes/api/times"));
+app.use("/tracks", require("./routes/api/tracks"));
 
 mongoose.connection.once("open", () => {
 	console.log("Connected to MongoDB.");
