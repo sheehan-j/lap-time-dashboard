@@ -8,7 +8,7 @@ const LapTimeTrackContainer = ({ lapData }) => {
 					key={index}
 					index={index}
 					pos={lap.pos}
-					name={lap.name}
+					driver={lap.driver}
 					date={lap.date}
 					time={lap.time}
 					gap={lap.gap}

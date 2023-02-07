@@ -8,7 +8,7 @@ const SelectorContainer = () => {
 				<Selector selectorText={"Dashboard"} />
 			</Link>
 			<Link to="/add" style={{ textDecoration: "none" }}>
-				<Selector selectorText={"Add Lap"} />
+				<Selector selectorText={"Add Data"} />
 			</Link>
 		</main>
 	);
