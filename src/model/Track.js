@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const trackSchema = new Schema({
 	trackid: {
 		type: Number,
+		unique: true,
 		required: true,
 	},
 	track: {
@@ -15,6 +16,18 @@ const trackSchema = new Schema({
 		required: true,
 	},
 	car: {
+		type: String,
+		required: true,
+	},
+	tracklowercase: {
+		type: String,
+		required: true,
+	},
+	gamelowercase: {
+		type: String,
+		required: true,
+	},
+	carlowercase: {
 		type: String,
 		required: true,
 	},

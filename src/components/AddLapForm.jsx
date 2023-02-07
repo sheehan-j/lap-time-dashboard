@@ -11,6 +11,17 @@ const AddLapForm = () => {
 	const [seconds, setSeconds] = useState("");
 	const [milliseconds, setMilliseconds] = useState("");
 
+	const clearForm = () => {
+		setTrack("");
+		setGame("");
+		setCar("");
+		setDriver("");
+		setDate("");
+		setMinutes("");
+		setSeconds("");
+		setMilliseconds("");
+	};
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
@@ -34,9 +45,21 @@ const AddLapForm = () => {
 		});
 		const result = await response.json();
 
-		if (response.status === 400) {
-			alert(result.message);
-			return;
+		// Handle possible responses
+		switch (response.status) {
+			case 400:
+				alert(result.message);
+				break;
+			case 500:
+				alert("Internal server error. Please try again later.");
+				break;
+			case 201:
+				alert("Lap time added.");
+				clearForm();
+				break;
+			default:
+				alert("There was an error. Try again later.");
+				break;
 		}
 	};
 
@@ -46,6 +69,7 @@ const AddLapForm = () => {
 			<input
 				className="addScreenFormInput"
 				type="text"
+				value={track}
 				placeholder="e.g. Nordschleife"
 				onChange={(e) => setTrack(e.target.value)}
 			/>
@@ -54,6 +78,7 @@ const AddLapForm = () => {
 			<input
 				className="addScreenFormInput"
 				type="text"
+				value={game}
 				placeholder="e.g. Gran Turismo"
 				onChange={(e) => setGame(e.target.value)}
 			/>
@@ -62,6 +87,7 @@ const AddLapForm = () => {
 			<input
 				className="addScreenFormInput"
 				type="text"
+				value={car}
 				placeholder="e.g. Mclaren F1 GTR"
 				onChange={(e) => setCar(e.target.value)}
 			/>
@@ -70,6 +96,7 @@ const AddLapForm = () => {
 			<input
 				className="addScreenFormInput"
 				type="text"
+				value={driver}
 				placeholder="e.g. Kolby"
 				onChange={(e) => setDriver(e.target.value)}
 			/>
@@ -78,6 +105,7 @@ const AddLapForm = () => {
 			<input
 				className="addScreenFormInput"
 				type="text"
+				value={date}
 				placeholder="mm/dd/yyyy"
 				onChange={(e) => setDate(e.target.value)}
 			/>
@@ -88,11 +116,13 @@ const AddLapForm = () => {
 					className="addScreenTimeInput"
 					placeholder="0"
 					type="text"
+					value={minutes}
 					onChange={(e) => setMinutes(e.target.value)}
 				/>
 				<input
 					className="addScreenTimeInput"
 					type="text"
+					value={seconds}
 					placeholder="00"
 					style={{ margin: "0 0.4rem" }}
 					onChange={(e) => setSeconds(e.target.value)}
@@ -101,6 +131,7 @@ const AddLapForm = () => {
 					className="addScreenTimeInput"
 					placeholder="000"
 					type="text"
+					value={milliseconds}
 					onChange={(e) => setMilliseconds(e.target.value)}
 				/>
 			</div>

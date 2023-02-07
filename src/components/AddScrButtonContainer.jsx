@@ -13,6 +13,11 @@ const AddScrButtonContainer = ({ selectedBtn, setSelectedBtn }) => {
 				setSelectedBtn={setSelectedBtn}
 				title={"Track"}
 			/>
+			<AddScrButton
+				selectedBtn={selectedBtn}
+				setSelectedBtn={setSelectedBtn}
+				title={"Driver"}
+			/>
 		</div>
 	);
 };

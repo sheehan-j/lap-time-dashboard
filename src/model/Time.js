@@ -5,17 +5,8 @@ const timeSchema = new Schema({
 	trackid: {
 		type: Number,
 		required: true,
-		unique: true,
 	},
-	track: {
-		type: String,
-		required: true,
-	},
-	game: {
-		type: String,
-		required: true,
-	},
-	car: {
+	driverid: {
 		type: String,
 		required: true,
 	},
