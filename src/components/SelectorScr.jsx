@@ -1,9 +1,12 @@
 import SelectorContainer from "./SelectorContainer";
 
-const SelectorScr = () => {
+const SelectorScr = ({ dashboardRunning, setDashboardRunning }) => {
 	return (
 		<div className="centered">
-			<SelectorContainer />
+			<SelectorContainer
+				dashboardRunning={dashboardRunning}
+				setDashboardRunning={setDashboardRunning}
+			/>
 		</div>
 	);
 };

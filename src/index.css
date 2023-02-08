@@ -39,6 +39,27 @@
 	font-size: 2rem;
 }
 
+.dashboardTogglerOn,
+.dashboardTogglerOff {
+	background-color: rgba(12, 144, 27, 0.1);
+	margin: 1rem;
+	font-family: "Inter", sans-serif;
+	padding: 2rem 8rem;
+	border-radius: 0.75rem;
+
+	transition: all 0.5s ease;
+}
+
+.dashboardTogglerOff {
+	background-color: rgba(205, 26, 26, 0.1);
+}
+
+.dashboardTogglerOn:hover,
+.dashboardTogglerOff:hover {
+	transform: scale(1.02);
+	cursor: pointer;
+}
+
 /* DASHBOARD SECTIONS */
 .dashboardScreenContainer {
 	width: 100%;

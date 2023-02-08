@@ -10,7 +10,7 @@ function App() {
 	const [driverCount, setDriverCount] = useState(0);
 	const [currTrack, setCurrTrack] = useState(1);
 	const [currDriver, setCurrDriver] = useState(1);
-	const [dashboardRunning, setDashboardRunning] = useState(false);
+	const [dashboardRunning, setDashboardRunning] = useState("Dashboard Off");
 
 	useEffect(() => {
 		const updateCounts = async () => {
@@ -18,7 +18,7 @@ function App() {
 			const driverCountResponse = await getDriverCount();
 			setTrackCount(trackCountResponse.count);
 			setDriverCount(driverCountResponse.count);
-			setDashboardRunning(true);
+			setDashboardRunning("Dashboard On");
 		};
 
 		const getTrackCount = async () => {
@@ -55,7 +55,7 @@ function App() {
 	useEffect(() => {
 		let trackInterval;
 
-		if (dashboardRunning) {
+		if (dashboardRunning === "Dashboard On") {
 			trackInterval = setInterval(() => {
 				setCurrTrack((prevValue) => {
 					if (prevValue === trackCount) {
@@ -63,7 +63,7 @@ function App() {
 					}
 					return prevValue + 1;
 				});
-			}, 1000);
+			}, 5000);
 		}
 
 		return () => clearInterval(trackInterval);
@@ -72,7 +72,7 @@ function App() {
 	useEffect(() => {
 		let driverInterval;
 
-		if (dashboardRunning) {
+		if (dashboardRunning === "Dashboard On") {
 			driverInterval = setInterval(() => {
 				setCurrDriver((prevValue) => {
 					if (prevValue === driverCount) {
@@ -80,7 +80,7 @@ function App() {
 					}
 					return prevValue + 1;
 				});
-			}, 1000);
+			}, 5000);
 		}
 
 		return () => clearInterval(driverInterval);
@@ -89,7 +89,15 @@ function App() {
 	return (
 		<Routes>
 			<Route path="/" element={<Layout />}>
-				<Route index element={<SelectorScr />} />
+				<Route
+					index
+					element={
+						<SelectorScr
+							dashboardRunning={dashboardRunning}
+							setDashboardRunning={setDashboardRunning}
+						/>
+					}
+				/>
 				<Route path="add">
 					<Route index element={<AddScr />} />
 				</Route>
