@@ -145,6 +145,10 @@
 	background-color: rgba(255, 255, 255, 0.1);
 }
 
+.record {
+	background-color: rgba(246, 66, 255, 0.5);
+}
+
 .lapTimeElement {
 	font-family: "Inter", sans-serif;
 	color: rgba(255, 255, 255, 0.75);

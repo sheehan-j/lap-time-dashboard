@@ -1,13 +1,19 @@
 import DashboardSection from "./DashboardSection";
 import { useState, useEffect } from "react";
 
-const DashboardScr = () => {
-	const [currTrack, setCurrTrack] = useState(1);
+const DashboardScr = ({
+	currTrack,
+	setCurrTrack,
+	currDriver,
+	setCurrDriver,
+}) => {
 	const [headerDataTrack, setHeaderDataTrack] = useState("");
+	const [headerDataDriver, setHeaderDataDriver] = useState("");
 	const [lapDataTrack, setLapDataTrack] = useState([]);
+	const [lapDataDriver, setLapDataDriver] = useState([]);
 
 	useEffect(() => {
-		const updateData = async () => {
+		const updateTrackData = async () => {
 			const trackInfo = await getTrackInfo();
 			setHeaderDataTrack({
 				track: trackInfo.track,
@@ -16,12 +22,24 @@ const DashboardScr = () => {
 			});
 
 			let trackTimes = await getTrackTimes();
-			setLapDataTrack(trackTimes);
+			if (trackTimes.message) {
+				setLapDataTrack([
+					{
+						pos: "",
+						driver: "",
+						date: "",
+						time: "",
+						gap: "",
+					},
+				]);
+			} else {
+				setLapDataTrack(trackTimes);
+			}
 		};
 
 		const getTrackInfo = async () => {
 			const TRACK_INFO_URL =
-				"http://localhost:6101/tracks/" + currTrack.toString();
+				"http://localhost:6101/tracks/by-id/" + currTrack.toString();
 
 			const response = await fetch(TRACK_INFO_URL, {
 				method: "GET",
@@ -36,7 +54,53 @@ const DashboardScr = () => {
 
 		const getTrackTimes = async () => {
 			const TRACK_TIMES_URL =
-				"http://localhost:6101/times/" + currTrack.toString();
+				"http://localhost:6101/times/by-track/" + currTrack.toString();
+
+			const response = await fetch(TRACK_TIMES_URL, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const result = await response.json();
+			return result;
+		};
+
+		// Create asynchronous function call in this format because useEffect
+		// is inherently synchronous
+		updateTrackData();
+	}, [currTrack]);
+
+	useEffect(() => {
+		const updateDriverData = async () => {
+			const driverInfo = await getDriverInfo();
+			setHeaderDataDriver({
+				driver: driverInfo.driver,
+			});
+
+			let timesByDriver = await getTimesByDriver();
+			setLapDataDriver(timesByDriver);
+		};
+
+		const getDriverInfo = async () => {
+			const DRIVER_URL =
+				"http://localhost:6101/drivers/by-driver/" +
+				currDriver.toString();
+
+			const response = await fetch(DRIVER_URL, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const result = await response.json();
+			return result;
+		};
+
+		const getTimesByDriver = async () => {
+			const TRACK_TIMES_URL =
+				"http://localhost:6101/times/by-driver/" +
+				currDriver.toString();
 
 			const response = await fetch(TRACK_TIMES_URL, {
 				method: "GET",
@@ -49,29 +113,8 @@ const DashboardScr = () => {
 			return result;
 		};
 
-		// Create asynchronous function call in this format because useEffect
-		// is inherently synchronous
-		updateData();
-	}, [currTrack]);
-
-	const headerDataDriver = {
-		driver: "Jordan",
-	};
-
-	const lapDataDriver = [
-		{
-			track: "Suzuka",
-			game: "Gran Turismo",
-			car: "Mercedes F1",
-			time: "1:35.147",
-		},
-		{
-			track: "Nordschleife",
-			game: "Gran Turismo",
-			car: "Mclaren F1 GTR",
-			time: "6:37.849",
-		},
-	];
+		updateDriverData();
+	}, [currDriver]);
 
 	return (
 		<div className="dashboardScreenContainer">
@@ -82,7 +125,7 @@ const DashboardScr = () => {
 				type={"track"}
 			/>
 			<DashboardSection
-				title={"Track Records by Driver"}
+				title={"Lap Times by Driver"}
 				lapData={lapDataDriver}
 				headerData={headerDataDriver}
 				type={"driver"}

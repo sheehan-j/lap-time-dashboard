@@ -12,6 +12,10 @@ const getTimesByTrack = async (req, res) => {
 		}
 	);
 
+	if (!mongooseTrackTimes.length) {
+		return res.status(400).json({ message: "All fields are required." });
+	}
+
 	const trackTimes = mongooseTrackTimes.map((doc) => {
 		return doc.toObject();
 	});
@@ -21,9 +25,9 @@ const getTimesByTrack = async (req, res) => {
 		trackTime.time =
 			trackTime.minutes.toString() +
 			":" +
-			trackTime.seconds.toString() +
+			trackTime.seconds.toString().padStart(2, "0") +
 			"." +
-			trackTime.milliseconds.toString();
+			trackTime.milliseconds.toString().padStart(3, "0");
 		trackTime.pos = i + 1;
 	});
 
@@ -57,22 +61,36 @@ const getTimesByTrack = async (req, res) => {
 	return res.status(200).json(trackTimes);
 };
 
-const getTimesAsPlainObjects = (req) => {
-	let trackTimes;
-	Time.find(
-		{ trackid: req.params.trackid },
+const getTimesByDriver = async (req, res) => {
+	// Get the lap times with Mongoose and convert into plain JS objects
+	const mongooseTrackTimes = await Time.find(
+		{ driverid: req.params.driverid },
 		null,
 		{
 			sort: { minutes: 1, seconds: 1, milliseconds: 1 },
-		},
-		(err, docs) => {
-			if (err) console.error(err);
-			trackTimes = docs.map((doc) => {
-				return doc.toObject();
-			});
+			select: "-date -driver -driverid -_id",
 		}
 	);
-	return trackTimes;
+
+	let trackTimes = mongooseTrackTimes.map((doc) => {
+		return doc.toObject();
+	});
+
+	// Add track info to each lap time for this driver
+	for (const time of trackTimes) {
+		const track = await Track.findOne({ trackid: time.trackid });
+		time.track = track.track;
+		time.game = track.game;
+		time.car = track.car;
+		time.time =
+			time.minutes.toString() +
+			":" +
+			time.seconds.toString().padStart(2, "0") +
+			"." +
+			time.milliseconds.toString().padStart(3, "0");
+	}
+
+	return res.status(200).json(trackTimes);
 };
 
 const postTime = async (req, res) => {
@@ -90,6 +108,7 @@ const postTime = async (req, res) => {
 	}
 
 	try {
+		// Verify that the track exists
 		const trackSearch = await Track.findOne({
 			tracklowercase: req.body.track.toLowerCase(),
 			gamelowercase: req.body.game.toLowerCase(),
@@ -103,13 +122,15 @@ const postTime = async (req, res) => {
 			});
 		}
 
-		// TODO: Add check for whether the request's driver exists
+		// Verify that the driver exists
 		const existingDriverSearch = await Driver.findOne({
 			driverlowercase: req.body.driver.toLowerCase(),
 		});
 
 		if (!existingDriverSearch) {
-			res.status(400).json({ message: "This driver does not exist." });
+			return res
+				.status(400)
+				.json({ message: "This driver does not exist." });
 		}
 
 		// Check if this driver already has a lap on this track, delete if
@@ -119,21 +140,74 @@ const postTime = async (req, res) => {
 			driver: req.body.driver,
 		});
 
+		// Check whether this lap is slower than the existing time, if it is,
+		// reject it
 		if (existingLapSearch) {
+			const newTime =
+				parseInt(req.body.minutes) * 60000 +
+				parseInt(req.body.seconds) * 1000 +
+				parseInt(req.body.milliseconds);
+
+			const oldTime =
+				existingLapSearch.minutes * 60000 +
+				existingLapSearch.seconds * 1000 +
+				existingLapSearch.milliseconds;
+
+			if (newTime > oldTime) {
+				return res.status(400).json({
+					message:
+						"You can only upload a lap time that is faster than your existing lap time for this track.",
+				});
+			}
+
+			// If the lap is faster, delete the slower so it can be replaced
 			await Time.deleteOne({ _id: existingLapSearch._id });
 		}
 
+		// Update which lap time is the record for this track
+		const lapCount = await Time.countDocuments({
+			trackid: trackSearch.trackid,
+		});
+
+		let trackrecord = false;
+		if (lapCount === 0) {
+			trackrecord = true;
+		} else {
+			const trackRecordSearch = await Time.findOne({
+				trackrecord: true,
+				trackid: trackSearch.trackid,
+			});
+			const newTime =
+				parseInt(req.body.minutes) * 60000 +
+				parseInt(req.body.seconds) * 1000 +
+				parseInt(req.body.milliseconds);
+
+			const oldTime =
+				trackRecordSearch.minutes * 60000 +
+				trackRecordSearch.seconds * 1000 +
+				trackRecordSearch.milliseconds;
+
+			if (newTime < oldTime) {
+				trackrecord = true;
+				await Time.updateOne(
+					{ trackrecord: true, trackid: trackSearch.trackid },
+					{ $set: { trackrecord: false } }
+				);
+			}
+		}
+
+		// Create the new lap time
 		try {
 			const result = await Time.create({
 				trackid: trackSearch.trackid,
 				driverid: existingDriverSearch.driverid,
 				driver: req.body.driver,
 				date: req.body.date,
-				minutes: req.body.minutes,
-				seconds: req.body.seconds,
-				milliseconds: req.body.milliseconds,
+				minutes: parseInt(req.body.minutes),
+				seconds: parseInt(req.body.seconds),
+				milliseconds: parseInt(req.body.milliseconds),
+				trackrecord: trackrecord,
 			});
-			console.log("Lap Time Created:\n", result);
 			res.status(201).json(result);
 		} catch (err) {
 			console.error(err);
@@ -146,5 +220,6 @@ const postTime = async (req, res) => {
 
 module.exports = {
 	getTimesByTrack,
+	getTimesByDriver,
 	postTime,
 };

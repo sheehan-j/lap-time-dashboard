@@ -21,6 +21,11 @@ const getAllDrivers = async (req, res) => {
 	return res.status(200).json(result);
 };
 
+const getDriverCount = async (req, res) => {
+	const count = await Driver.countDocuments({}).exec();
+	return res.status(200).json({ count: count });
+};
+
 const postDriver = async (req, res) => {
 	if (!req?.body?.driver) {
 		return res.status(400).json({ message: "All fields are required." });
@@ -55,5 +60,6 @@ const postDriver = async (req, res) => {
 module.exports = {
 	getDriver,
 	getAllDrivers,
+	getDriverCount,
 	postDriver,
 };

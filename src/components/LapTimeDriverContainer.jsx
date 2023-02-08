@@ -11,6 +11,7 @@ const LapTimeDriverContainer = ({ lapData }) => {
 					game={lap.game}
 					car={lap.car}
 					time={lap.time}
+					record={lap.trackrecord}
 				/>
 			))}
 		</div>

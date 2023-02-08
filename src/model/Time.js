@@ -7,7 +7,7 @@ const timeSchema = new Schema({
 		required: true,
 	},
 	driverid: {
-		type: String,
+		type: Number,
 		required: true,
 	},
 	driver: {
@@ -28,6 +28,10 @@ const timeSchema = new Schema({
 	},
 	milliseconds: {
 		type: Number,
+		required: true,
+	},
+	trackrecord: {
+		type: Boolean,
 		required: true,
 	},
 });
