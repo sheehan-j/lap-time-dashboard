@@ -1,11 +1,15 @@
 import DashboardSection from "./DashboardSection";
 import { useState, useEffect } from "react";
+import DashboardReturnButton from "./DashboardReturnButton";
+import { Link } from "react-router-dom";
 
 const DashboardScr = ({
 	currTrack,
 	setCurrTrack,
 	currDriver,
 	setCurrDriver,
+	dataFade,
+	setDataFade,
 }) => {
 	const [headerDataTrack, setHeaderDataTrack] = useState("");
 	const [headerDataDriver, setHeaderDataDriver] = useState("");
@@ -35,6 +39,10 @@ const DashboardScr = ({
 			} else {
 				setLapDataTrack(trackTimes);
 			}
+
+			setTimeout(() => {
+				setDataFade(false);
+			}, 1000);
 		};
 
 		const getTrackInfo = async () => {
@@ -118,15 +126,20 @@ const DashboardScr = ({
 
 	return (
 		<div className="dashboardScreenContainer">
+			<Link to="/">
+				<DashboardReturnButton />
+			</Link>
 			<DashboardSection
 				title={"Lap Times by Track"}
 				lapData={lapDataTrack}
+				dataFade={dataFade}
 				headerData={headerDataTrack}
 				type={"track"}
 			/>
 			<DashboardSection
 				title={"Lap Times by Driver"}
 				lapData={lapDataDriver}
+				dataFade={dataFade}
 				headerData={headerDataDriver}
 				type={"driver"}
 			/>

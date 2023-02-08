@@ -11,6 +11,7 @@ function App() {
 	const [currTrack, setCurrTrack] = useState(1);
 	const [currDriver, setCurrDriver] = useState(1);
 	const [dashboardRunning, setDashboardRunning] = useState("Dashboard Off");
+	const [dataFade, setDataFade] = useState(false);
 
 	useEffect(() => {
 		const updateCounts = async () => {
@@ -57,12 +58,15 @@ function App() {
 
 		if (dashboardRunning === "Dashboard On") {
 			trackInterval = setInterval(() => {
-				setCurrTrack((prevValue) => {
-					if (prevValue === trackCount) {
-						return 1;
-					}
-					return prevValue + 1;
-				});
+				setDataFade(true);
+				setTimeout(() => {
+					setCurrTrack((prevValue) => {
+						if (prevValue === trackCount) {
+							return 1;
+						}
+						return prevValue + 1;
+					});
+				}, 500);
 			}, 5000);
 		}
 
@@ -74,12 +78,15 @@ function App() {
 
 		if (dashboardRunning === "Dashboard On") {
 			driverInterval = setInterval(() => {
-				setCurrDriver((prevValue) => {
-					if (prevValue === driverCount) {
-						return 1;
-					}
-					return prevValue + 1;
-				});
+				setDataFade(true);
+				setTimeout(() => {
+					setCurrDriver((prevValue) => {
+						if (prevValue === driverCount) {
+							return 1;
+						}
+						return prevValue + 1;
+					});
+				}, 500);
 			}, 5000);
 		}
 
@@ -110,6 +117,8 @@ function App() {
 								setCurrTrack={setCurrTrack}
 								currDriver={currDriver}
 								setCurrDriver={setCurrDriver}
+								dataFade={dataFade}
+								setDataFade={setDataFade}
 							/>
 						}
 					/>

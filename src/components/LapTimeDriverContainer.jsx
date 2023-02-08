@@ -1,8 +1,10 @@
 import LapTimeDriver from "./LapTimeDriver";
 
-const LapTimeDriverContainer = ({ lapData }) => {
+const LapTimeDriverContainer = ({ lapData, dataFade }) => {
 	return (
-		<div className="lapTimeContainer">
+		<div
+			className={`lapTimeContainer ${dataFade ? "fade-out" : "fade-in"}`}
+		>
 			{lapData.map((lap, index) => (
 				<LapTimeDriver
 					key={index}
