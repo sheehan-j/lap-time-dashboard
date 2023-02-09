@@ -6,7 +6,7 @@ router
 	.route("/")
 	.get(tracksController.getAllTracks)
 	.post(tracksController.postTrack);
-
-router.route("/:id").get(tracksController.getTrack);
+router.route("/by-id/:id").get(tracksController.getTrack);
+router.route("/count").get(tracksController.getTrackCount);
 
 module.exports = router;

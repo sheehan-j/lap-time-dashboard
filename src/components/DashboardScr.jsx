@@ -1,13 +1,24 @@
 import DashboardSection from "./DashboardSection";
 import { useState, useEffect } from "react";
+import DashboardReturnButton from "./DashboardReturnButton";
+import { Link } from "react-router-dom";
 
-const DashboardScr = () => {
-	const [currTrack, setCurrTrack] = useState(1);
+const DashboardScr = ({
+	currTrack,
+	setCurrTrack,
+	currDriver,
+	setCurrDriver,
+	dataFade,
+	setDataFade,
+}) => {
 	const [headerDataTrack, setHeaderDataTrack] = useState("");
+	const [headerDataDriver, setHeaderDataDriver] = useState("");
 	const [lapDataTrack, setLapDataTrack] = useState([]);
+	const [lapDataDriver, setLapDataDriver] = useState([]);
 
+	// useEffect hooks
 	useEffect(() => {
-		const updateData = async () => {
+		const updateTrackData = async () => {
 			const trackInfo = await getTrackInfo();
 			setHeaderDataTrack({
 				track: trackInfo.track,
@@ -16,74 +27,122 @@ const DashboardScr = () => {
 			});
 
 			let trackTimes = await getTrackTimes();
-			setLapDataTrack(trackTimes);
-		};
+			if (trackTimes == null) {
+				setLapDataTrack([
+					{
+						pos: "",
+						driver: "",
+						date: "",
+						time: "",
+						gap: "",
+					},
+				]);
+			} else {
+				setLapDataTrack(trackTimes);
+			}
 
-		const getTrackInfo = async () => {
-			const TRACK_INFO_URL =
-				"http://localhost:6101/tracks/" + currTrack.toString();
-
-			const response = await fetch(TRACK_INFO_URL, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const result = await response.json();
-
-			return result;
-		};
-
-		const getTrackTimes = async () => {
-			const TRACK_TIMES_URL =
-				"http://localhost:6101/times/" + currTrack.toString();
-
-			const response = await fetch(TRACK_TIMES_URL, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const result = await response.json();
-
-			return result;
+			setTimeout(() => {
+				setDataFade(false);
+			}, 1000);
 		};
 
 		// Create asynchronous function call in this format because useEffect
 		// is inherently synchronous
-		updateData();
+		updateTrackData();
 	}, [currTrack]);
 
-	const headerDataDriver = {
-		driver: "Jordan",
+	useEffect(() => {
+		const updateDriverData = async () => {
+			const driverInfo = await getDriverInfo();
+			setHeaderDataDriver({
+				driver: driverInfo.driver,
+			});
+
+			let timesByDriver = await getTimesByDriver();
+			setLapDataDriver(timesByDriver);
+		};
+
+		updateDriverData();
+	}, [currDriver]);
+
+	// Fetch functions
+	const getTrackInfo = async () => {
+		const TRACK_INFO_URL =
+			"http://localhost:6101/tracks/by-id/" + currTrack.toString();
+
+		const response = await fetch(TRACK_INFO_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await response.json();
+		return result;
 	};
 
-	const lapDataDriver = [
-		{
-			track: "Suzuka",
-			game: "Gran Turismo",
-			car: "Mercedes F1",
-			time: "1:35.147",
-		},
-		{
-			track: "Nordschleife",
-			game: "Gran Turismo",
-			car: "Mclaren F1 GTR",
-			time: "6:37.849",
-		},
-	];
+	const getTrackTimes = async () => {
+		const TRACK_TIMES_URL =
+			"http://localhost:6101/times/by-track/" + currTrack.toString();
+
+		const response = await fetch(TRACK_TIMES_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		if (response.status === 200) {
+			const result = await response.json();
+			return result;
+		} else {
+			return null;
+		}
+	};
+
+	const getDriverInfo = async () => {
+		const DRIVER_URL =
+			"http://localhost:6101/drivers/by-driver/" + currDriver.toString();
+
+		const response = await fetch(DRIVER_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await response.json();
+		return result;
+	};
+
+	const getTimesByDriver = async () => {
+		const TRACK_TIMES_URL =
+			"http://localhost:6101/times/by-driver/" + currDriver.toString();
+
+		const response = await fetch(TRACK_TIMES_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await response.json();
+		return result;
+	};
 
 	return (
 		<div className="dashboardScreenContainer">
+			<Link to="/">
+				<DashboardReturnButton />
+			</Link>
 			<DashboardSection
 				title={"Lap Times by Track"}
 				lapData={lapDataTrack}
+				dataFade={dataFade}
 				headerData={headerDataTrack}
 				type={"track"}
 			/>
 			<DashboardSection
-				title={"Track Records by Driver"}
+				title={"Lap Times by Driver"}
 				lapData={lapDataDriver}
+				dataFade={dataFade}
 				headerData={headerDataDriver}
 				type={"driver"}
 			/>

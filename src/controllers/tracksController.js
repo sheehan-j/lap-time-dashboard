@@ -12,8 +12,14 @@ const getTrack = async (req, res) => {
 	return res.status(200).json(result);
 };
 
+// TODO: Write getAllTracks function
 const getAllTracks = async (req, res) => {
 	console.log(req.params);
+};
+
+const getTrackCount = async (req, res) => {
+	const count = await Track.countDocuments({}).exec();
+	return res.status(200).json({ count: count });
 };
 
 const postTrack = async (req, res) => {
@@ -56,5 +62,6 @@ const postTrack = async (req, res) => {
 module.exports = {
 	getTrack,
 	getAllTracks,
+	getTrackCount,
 	postTrack,
 };

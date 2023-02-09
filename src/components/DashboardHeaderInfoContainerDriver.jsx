@@ -1,18 +1,14 @@
 import React from "react";
 import DashboardHeaderInfo from "./DashboardHeaderInfo";
 
-const DashboardHeaderInfoContainerDriver = ({ headerData }) => {
+const DashboardHeaderInfoContainerDriver = ({ headerData, dataFade }) => {
 	return (
-		<div className="dashboardHeaderInfoContainer">
+		<div
+			className={`dashboardHeaderInfoContainer ${
+				dataFade ? "fade-out" : "fade-in"
+			}`}
+		>
 			<DashboardHeaderInfo title={"Driver"} value={headerData.driver} />
-			{/* 
-			{headerData.map((data, index) => (
-				<DashboardHeaderInfo
-					key={index}
-					title={data.title}
-					value={data.value}
-				/>
-			))} */}
 		</div>
 	);
 };

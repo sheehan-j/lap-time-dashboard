@@ -39,6 +39,27 @@
 	font-size: 2rem;
 }
 
+.dashboardTogglerOn,
+.dashboardTogglerOff {
+	background-color: rgba(12, 144, 27, 0.1);
+	margin: 1rem;
+	font-family: "Inter", sans-serif;
+	padding: 2rem 8rem;
+	border-radius: 0.75rem;
+
+	transition: all 0.5s ease;
+}
+
+.dashboardTogglerOff {
+	background-color: rgba(205, 26, 26, 0.1);
+}
+
+.dashboardTogglerOn:hover,
+.dashboardTogglerOff:hover {
+	transform: scale(1.02);
+	cursor: pointer;
+}
+
 /* DASHBOARD SECTIONS */
 .dashboardScreenContainer {
 	width: 100%;
@@ -83,6 +104,15 @@
 .dashboardHeaderInfoContainer {
 	display: flex;
 	justify-content: flex-start;
+	transition: all 0.25s ease;
+}
+
+.fade-in {
+	opacity: 1;
+}
+
+.fade-out {
+	opacity: 0;
 }
 
 .dashboardHeaderInfo {
@@ -130,6 +160,7 @@
 .lapTimeContainer {
 	width: 100%;
 	overflow: hidden;
+	transition: all 0.25s ease-in-out;
 }
 
 .lapTime {
@@ -145,12 +176,38 @@
 	background-color: rgba(255, 255, 255, 0.1);
 }
 
+.record {
+	background-color: rgba(246, 66, 255, 0.5);
+}
+
 .lapTimeElement {
 	font-family: "Inter", sans-serif;
 	color: rgba(255, 255, 255, 0.75);
 	font-size: 1.5rem;
 	font-weight: 400;
 	text-align: start;
+}
+
+.dashboardReturnButton {
+	all: unset;
+	font-family: "Inter", sans-serif;
+	background-color: rgba(255, 255, 255, 0.1);
+	color: rgba(255, 255, 255, 0.75);
+	font-size: 1.3rem;
+	font-weight: 600;
+	text-align: center;
+	padding: 0.5rem 1.2rem;
+	transition: all 0.3s ease;
+	border-radius: 0.4rem;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	opacity: 0;
+}
+
+.dashboardReturnButton:hover {
+	cursor: pointer;
+	opacity: 1;
 }
 
 /* ADD SCREEN */

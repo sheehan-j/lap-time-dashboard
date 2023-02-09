@@ -6,6 +6,7 @@ router
 	.route("/")
 	.get(driversController.getAllDrivers)
 	.post(driversController.postDriver);
-router.route("/:driver").get(driversController.getDriver);
+router.route("/by-driver/:driver").get(driversController.getDriver);
+router.route("/count").get(driversController.getDriverCount);
 
 module.exports = router;

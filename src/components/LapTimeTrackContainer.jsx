@@ -1,8 +1,10 @@
 import LapTimeTrack from "./LapTimeTrack";
 
-const LapTimeTrackContainer = ({ lapData }) => {
+const LapTimeTrackContainer = ({ lapData, dataFade }) => {
 	return (
-		<div className="lapTimeContainer">
+		<div
+			className={`lapTimeContainer ${dataFade ? "fade-out" : "fade-in"}`}
+		>
 			{lapData.map((lap, index) => (
 				<LapTimeTrack
 					key={index}
