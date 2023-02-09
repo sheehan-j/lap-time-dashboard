@@ -4,7 +4,7 @@ import DashboardToggler from "./DashboardToggler";
 
 const SelectorContainer = ({ dashboardRunning, setDashboardRunning }) => {
 	return (
-		<main>
+		<div className="selectorContainer">
 			<Link to="/dashboard" style={{ textDecoration: "none" }}>
 				<Selector selectorText={"Dashboard"} />
 			</Link>
@@ -15,7 +15,7 @@ const SelectorContainer = ({ dashboardRunning, setDashboardRunning }) => {
 				dashboardRunning={dashboardRunning}
 				setDashboardRunning={setDashboardRunning}
 			/>
-		</main>
+		</div>
 	);
 };
 

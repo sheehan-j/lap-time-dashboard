@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const AddLapForm = () => {
-	const API_URL = "http://localhost:6101/times";
+	const API_URL = "/times/";
 	const [track, setTrack] = useState("");
 	const [game, setGame] = useState("");
 	const [car, setCar] = useState("");
@@ -48,17 +48,17 @@ const AddLapForm = () => {
 		// Handle possible responses
 		switch (response.status) {
 			case 400:
-				alert(result.message);
+				window.alert(result.message);
 				break;
 			case 500:
-				alert("Internal server error. Please try again later.");
+				window.alert("Internal server error. Please try again later.");
 				break;
 			case 201:
-				alert("Lap time added.");
+				window.alert("Lap time added.");
 				clearForm();
 				break;
 			default:
-				alert("There was an error. Try again later.");
+				window.alert("There was an error. Try again later.");
 				break;
 		}
 	};

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const AddDriverForm = () => {
-	const API_URL = "http://localhost:6101/drivers";
+	const API_URL = "/drivers/";
 	const [driver, setDriver] = useState("");
 
 	const handleSubmit = async (event) => {
@@ -23,17 +23,17 @@ const AddDriverForm = () => {
 		// Handle possible responses
 		switch (response.status) {
 			case 400:
-				alert(result.message);
+				window.alert(result.message);
 				break;
 			case 500:
-				alert("Internal server error. Please try again later.");
+				window.alert("Internal server error. Please try again later.");
 				break;
 			case 201:
-				alert("Driver added.");
+				window.alert("Driver added.");
 				setDriver("");
 				break;
 			default:
-				alert("There was an error. Try again later.");
+				window.alert("There was an error. Try again later.");
 				break;
 		}
 	};

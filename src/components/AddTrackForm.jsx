@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const AddTrackForm = () => {
-	const API_URL = "http://localhost:6101/tracks";
+	const API_URL = "/tracks/";
 	const [track, setTrack] = useState("");
 	const [game, setGame] = useState("");
 	const [car, setCar] = useState("");
@@ -33,17 +33,17 @@ const AddTrackForm = () => {
 		// Handle possible responses
 		switch (response.status) {
 			case 400:
-				alert(result.message);
+				window.alert(result.message);
 				break;
 			case 500:
-				alert("Internal server error. Please try again later.");
+				window.alert("Internal server error. Please try again later.");
 				break;
 			case 201:
-				alert("Track added.");
+				window.alert("Track added.");
 				clearForm();
 				break;
 			default:
-				alert("There was an error. Try again later.");
+				window.alert("There was an error. Try again later.");
 				break;
 		}
 	};

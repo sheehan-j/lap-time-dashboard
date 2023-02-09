@@ -39,7 +39,7 @@ function App() {
 						return prevValue + 1;
 					});
 				}, 250);
-			}, 5000);
+			}, 10000);
 		}
 
 		return () => clearInterval(trackInterval);
@@ -59,7 +59,7 @@ function App() {
 						return prevValue + 1;
 					});
 				}, 250);
-			}, 5000);
+			}, 10000);
 		}
 
 		return () => clearInterval(driverInterval);
@@ -72,7 +72,7 @@ function App() {
 			if (responseTrackCount.count !== trackCount) {
 				setTrackCount(responseTrackCount.count);
 			}
-		}, 5000);
+		}, 10000);
 
 		return () => clearInterval(monitorTrackCount);
 	}, []);
@@ -84,7 +84,7 @@ function App() {
 			if (responseDriverCount.count !== driverCount) {
 				setDriverCount(responseDriverCount.count);
 			}
-		}, 5000);
+		}, 10000);
 
 		return () => clearInterval(monitorDriverCount);
 	}, []);
