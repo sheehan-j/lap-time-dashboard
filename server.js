@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const connectToDB = require("./config/dbConfig");
+const connectToDB = require("./src/config/dbConfig");
 const path = require("path");
 const PORT = process.env.BACKEND_PORT || 6101;
 const cors = require("cors");
@@ -19,13 +19,13 @@ app.use(cors());
 app.use(express.json());
 
 // Serve static files
-app.use("/", express.static(path.join(__dirname, "..", "public")));
+app.use("/", express.static(path.join(__dirname, "build")));
 
 // Routes
-app.use("/", require("./routes/root"));
-app.use("/times", require("./routes/api/times"));
-app.use("/tracks", require("./routes/api/tracks"));
-app.use("/drivers", require("./routes/api/drivers"));
+app.use("/", require("./src/routes/root"));
+app.use("/times", require("./src/routes/api/times"));
+app.use("/tracks", require("./src/routes/api/tracks"));
+app.use("/drivers", require("./src/routes/api/drivers"));
 
 mongoose.connection.once("open", () => {
 	console.log("Connected to MongoDB.");
