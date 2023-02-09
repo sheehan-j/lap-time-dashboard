@@ -90,7 +90,7 @@ function App() {
 	}, []);
 
 	const getTrackCount = async () => {
-		const TRACK_COUNT_URL = "http://localhost:6101/tracks/count";
+		const TRACK_COUNT_URL = "/tracks/count";
 
 		const response = await fetch(TRACK_COUNT_URL, {
 			method: "GET",
@@ -104,7 +104,7 @@ function App() {
 	};
 
 	const getDriverCount = async () => {
-		const TRACK_COUNT_URL = "http://localhost:6101/drivers/count";
+		const TRACK_COUNT_URL = "/drivers/count";
 
 		const response = await fetch(TRACK_COUNT_URL, {
 			method: "GET",

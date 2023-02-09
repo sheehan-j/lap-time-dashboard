@@ -67,8 +67,7 @@ const DashboardScr = ({
 
 	// Fetch functions
 	const getTrackInfo = async () => {
-		const TRACK_INFO_URL =
-			"http://localhost:6101/tracks/by-id/" + currTrack.toString();
+		const TRACK_INFO_URL = "/tracks/by-id/" + currTrack.toString();
 
 		const response = await fetch(TRACK_INFO_URL, {
 			method: "GET",
@@ -81,8 +80,7 @@ const DashboardScr = ({
 	};
 
 	const getTrackTimes = async () => {
-		const TRACK_TIMES_URL =
-			"http://localhost:6101/times/by-track/" + currTrack.toString();
+		const TRACK_TIMES_URL = "/times/by-track/" + currTrack.toString();
 
 		const response = await fetch(TRACK_TIMES_URL, {
 			method: "GET",
@@ -100,8 +98,7 @@ const DashboardScr = ({
 	};
 
 	const getDriverInfo = async () => {
-		const DRIVER_URL =
-			"http://localhost:6101/drivers/by-driver/" + currDriver.toString();
+		const DRIVER_URL = "/drivers/by-driver/" + currDriver.toString();
 
 		const response = await fetch(DRIVER_URL, {
 			method: "GET",
@@ -114,8 +111,7 @@ const DashboardScr = ({
 	};
 
 	const getTimesByDriver = async () => {
-		const TRACK_TIMES_URL =
-			"http://localhost:6101/times/by-driver/" + currDriver.toString();
+		const TRACK_TIMES_URL = "/times/by-driver/" + currDriver.toString();
 
 		const response = await fetch(TRACK_TIMES_URL, {
 			method: "GET",
