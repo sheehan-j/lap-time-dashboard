@@ -22,34 +22,6 @@ function App() {
 			setDashboardRunning("Dashboard On");
 		};
 
-		const getTrackCount = async () => {
-			const TRACK_COUNT_URL = "http://localhost:6101/tracks/count";
-
-			const response = await fetch(TRACK_COUNT_URL, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const result = await response.json();
-
-			return result;
-		};
-
-		const getDriverCount = async () => {
-			const TRACK_COUNT_URL = "http://localhost:6101/drivers/count";
-
-			const response = await fetch(TRACK_COUNT_URL, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const result = await response.json();
-
-			return result;
-		};
-
 		updateCounts();
 	}, []);
 
@@ -66,12 +38,12 @@ function App() {
 						}
 						return prevValue + 1;
 					});
-				}, 500);
+				}, 250);
 			}, 5000);
 		}
 
 		return () => clearInterval(trackInterval);
-	}, [dashboardRunning]);
+	}, [dashboardRunning, trackCount]);
 
 	useEffect(() => {
 		let driverInterval;
@@ -86,12 +58,64 @@ function App() {
 						}
 						return prevValue + 1;
 					});
-				}, 500);
+				}, 250);
 			}, 5000);
 		}
 
 		return () => clearInterval(driverInterval);
-	}, [dashboardRunning]);
+	}, [dashboardRunning, driverCount]);
+
+	useEffect(() => {
+		const monitorTrackCount = setInterval(async () => {
+			const responseTrackCount = await getTrackCount();
+
+			if (responseTrackCount.count !== trackCount) {
+				setTrackCount(responseTrackCount.count);
+			}
+		}, 5000);
+
+		return () => clearInterval(monitorTrackCount);
+	}, []);
+
+	useEffect(() => {
+		const monitorDriverCount = setInterval(async () => {
+			const responseDriverCount = await getDriverCount();
+
+			if (responseDriverCount.count !== driverCount) {
+				setDriverCount(responseDriverCount.count);
+			}
+		}, 5000);
+
+		return () => clearInterval(monitorDriverCount);
+	}, []);
+
+	const getTrackCount = async () => {
+		const TRACK_COUNT_URL = "http://localhost:6101/tracks/count";
+
+		const response = await fetch(TRACK_COUNT_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await response.json();
+
+		return result;
+	};
+
+	const getDriverCount = async () => {
+		const TRACK_COUNT_URL = "http://localhost:6101/drivers/count";
+
+		const response = await fetch(TRACK_COUNT_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await response.json();
+
+		return result;
+	};
 
 	return (
 		<Routes>
@@ -106,7 +130,17 @@ function App() {
 					}
 				/>
 				<Route path="add">
-					<Route index element={<AddScr />} />
+					<Route
+						index
+						element={
+							<AddScr
+								trackCount={trackCount}
+								setTrackCount={setTrackCount}
+								driverCount={driverCount}
+								setDriverCount={setDriverCount}
+							/>
+						}
+					/>
 				</Route>
 				<Route path="dashboard">
 					<Route

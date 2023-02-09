@@ -16,6 +16,7 @@ const DashboardScr = ({
 	const [lapDataTrack, setLapDataTrack] = useState([]);
 	const [lapDataDriver, setLapDataDriver] = useState([]);
 
+	// useEffect hooks
 	useEffect(() => {
 		const updateTrackData = async () => {
 			const trackInfo = await getTrackInfo();
@@ -26,7 +27,7 @@ const DashboardScr = ({
 			});
 
 			let trackTimes = await getTrackTimes();
-			if (trackTimes.message) {
+			if (trackTimes == null) {
 				setLapDataTrack([
 					{
 						pos: "",
@@ -45,35 +46,6 @@ const DashboardScr = ({
 			}, 1000);
 		};
 
-		const getTrackInfo = async () => {
-			const TRACK_INFO_URL =
-				"http://localhost:6101/tracks/by-id/" + currTrack.toString();
-
-			const response = await fetch(TRACK_INFO_URL, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const result = await response.json();
-
-			return result;
-		};
-
-		const getTrackTimes = async () => {
-			const TRACK_TIMES_URL =
-				"http://localhost:6101/times/by-track/" + currTrack.toString();
-
-			const response = await fetch(TRACK_TIMES_URL, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const result = await response.json();
-			return result;
-		};
-
 		// Create asynchronous function call in this format because useEffect
 		// is inherently synchronous
 		updateTrackData();
@@ -90,39 +62,70 @@ const DashboardScr = ({
 			setLapDataDriver(timesByDriver);
 		};
 
-		const getDriverInfo = async () => {
-			const DRIVER_URL =
-				"http://localhost:6101/drivers/by-driver/" +
-				currDriver.toString();
-
-			const response = await fetch(DRIVER_URL, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const result = await response.json();
-			return result;
-		};
-
-		const getTimesByDriver = async () => {
-			const TRACK_TIMES_URL =
-				"http://localhost:6101/times/by-driver/" +
-				currDriver.toString();
-
-			const response = await fetch(TRACK_TIMES_URL, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			const result = await response.json();
-
-			return result;
-		};
-
 		updateDriverData();
 	}, [currDriver]);
+
+	// Fetch functions
+	const getTrackInfo = async () => {
+		const TRACK_INFO_URL =
+			"http://localhost:6101/tracks/by-id/" + currTrack.toString();
+
+		const response = await fetch(TRACK_INFO_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await response.json();
+		return result;
+	};
+
+	const getTrackTimes = async () => {
+		const TRACK_TIMES_URL =
+			"http://localhost:6101/times/by-track/" + currTrack.toString();
+
+		const response = await fetch(TRACK_TIMES_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		if (response.status === 200) {
+			const result = await response.json();
+			return result;
+		} else {
+			return null;
+		}
+	};
+
+	const getDriverInfo = async () => {
+		const DRIVER_URL =
+			"http://localhost:6101/drivers/by-driver/" + currDriver.toString();
+
+		const response = await fetch(DRIVER_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await response.json();
+		return result;
+	};
+
+	const getTimesByDriver = async () => {
+		const TRACK_TIMES_URL =
+			"http://localhost:6101/times/by-driver/" + currDriver.toString();
+
+		const response = await fetch(TRACK_TIMES_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const result = await response.json();
+		return result;
+	};
 
 	return (
 		<div className="dashboardScreenContainer">

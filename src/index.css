@@ -104,7 +104,7 @@
 .dashboardHeaderInfoContainer {
 	display: flex;
 	justify-content: flex-start;
-	transition: all 0.3s ease;
+	transition: all 0.25s ease;
 }
 
 .fade-in {
@@ -160,7 +160,7 @@
 .lapTimeContainer {
 	width: 100%;
 	overflow: hidden;
-	transition: all 0.5s ease-in-out;
+	transition: all 0.25s ease-in-out;
 }
 
 .lapTime {

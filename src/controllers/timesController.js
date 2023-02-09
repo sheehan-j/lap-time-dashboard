@@ -13,7 +13,7 @@ const getTimesByTrack = async (req, res) => {
 	);
 
 	if (!mongooseTrackTimes.length) {
-		return res.status(400).json({ message: "All fields are required." });
+		return res.status(204).json({ message: "No times found." });
 	}
 
 	const trackTimes = mongooseTrackTimes.map((doc) => {
