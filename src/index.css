@@ -538,4 +538,12 @@
 	.lapTimeElement {
 		font-size: 0.5rem;
 	}
+
+	.dashboardShortCycleTimeButton {
+		display: none;
+	}
+
+	.dashboardShortCycleTimeButton:hover {
+		display: none;
+	}
 }
