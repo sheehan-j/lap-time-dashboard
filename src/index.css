@@ -19,8 +19,8 @@
 
 /* SELECTORS */
 .selectorContainer {
-    width: 100%;
-    box-sizing: border-box;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .selector {
@@ -28,11 +28,11 @@
 	margin: 1rem;
 	font-family: "Inter", sans-serif;
 	border-radius: 0.75rem;
-    padding: 2rem 0;
-    box-sizing: border-box;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
+	padding: 2rem 0;
+	box-sizing: border-box;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
 
 	transition: all 0.5s ease;
 }
@@ -54,9 +54,9 @@
 	margin: 1rem;
 	font-family: "Inter", sans-serif;
 	padding: 2rem 0;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
 	border-radius: 0.75rem;
 
 	transition: all 0.5s ease;
@@ -73,10 +73,12 @@
 }
 
 /* DASHBOARD SECTIONS */
-.dashboardScreenContainer {
+.dashboardScreenContainer,
+.viewScreenContainer {
 	width: 100%;
 	min-height: 100vh;
 	display: flex;
+	flex-direction: row;
 }
 
 .dashboardSection {
@@ -394,9 +396,117 @@
 }
 
 @media only screen and (min-width: 768px) {
-    .selector, .dashboardTogglerOn, .dashboardTogglerOff {
-        width: 50%;
-        margin-left: auto;
-        margin-right: auto;
-    }
+	.selector,
+	.dashboardTogglerOn,
+	.dashboardTogglerOff {
+		width: 50%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1439px) {
+	.dashboardSection {
+		padding: 0.75rem;
+	}
+
+	.dashboardHeaderInfo {
+		margin: 0;
+	}
+
+	/* Font Sizes */
+
+	.dashboardTitle {
+		font-size: 1.5rem;
+	}
+
+	.dashboardHeaderInfo {
+		font-size: 1rem;
+		margin-right: 0.5rem;
+	}
+
+	.dashboardBodyTitle {
+		font-size: 0.75rem;
+	}
+
+	.lapTimeElement {
+		font-size: 0.75rem;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.dashboardScreenContainer,
+	.viewScreenContainer {
+		width: 100%;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		padding-top: 3.25rem; /* Add padding to make space for the absolute return button on mobile */
+	}
+
+	.addScreenContainer {
+		padding: 0 1rem;
+	}
+
+	.selector,
+	.dashboardTogglerOn,
+	.dashboardTogglerOff {
+		width: 95%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.dashboardSection {
+		padding: 0.75rem;
+	}
+
+	.dashboardHeaderInfoContainer {
+		display: flex;
+		flex-direction: column;
+		transition: all 0.25s ease;
+	}
+
+	.dashboardBodyLine {
+		margin: 0.3rem 0;
+	}
+
+	.lapTime {
+		padding: 0.2rem 1.5rem;
+	}
+
+	.dashboardHeader {
+		padding: 0.75rem 1rem;
+	}
+
+	.dashboardHeaderInfo {
+		margin-right: 0;
+		margin-bottom: 0.25rem;
+	}
+
+	.dashboardReturnButton {
+		opacity: 1;
+		left: 0;
+		right: 0;
+		width: 50%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* Font Sizes */
+	.dashboardTitle {
+		font-size: 2rem;
+		text-align: center;
+	}
+
+	.dashboardHeaderInfo {
+		font-size: 1rem;
+	}
+
+	.dashboardBodyTitle {
+		font-size: 0.75rem;
+	}
+
+	.lapTimeElement {
+		font-size: 0.5rem;
+	}
 }
