@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { config } from "../config/Constants";
 
 const AddLapForm = () => {
-	const API_URL = "/times/";
+	const API_URL = config.API_BASE_URL + "/times/";
 	const [track, setTrack] = useState("");
 	const [game, setGame] = useState("");
 	const [car, setCar] = useState("");
@@ -48,7 +49,10 @@ const AddLapForm = () => {
 		// Handle possible responses
 		switch (response.status) {
 			case 400:
-				window.alert(result.message);
+				window.alert(
+					result.message +
+						"You can check the View Data screen for existing tracks and drivers in case you might be typing something incorrectly."
+				);
 				break;
 			case 500:
 				window.alert("Internal server error. Please try again later.");

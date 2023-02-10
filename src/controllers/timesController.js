@@ -147,11 +147,13 @@ const postTime = async (req, res) => {
 				parseInt(req.body.minutes) * 60000 +
 				parseInt(req.body.seconds) * 1000 +
 				parseInt(req.body.milliseconds);
+			console.log(newTime);
 
 			const oldTime =
 				existingLapSearch.minutes * 60000 +
 				existingLapSearch.seconds * 1000 +
 				existingLapSearch.milliseconds;
+			console.log(oldTime);
 
 			if (newTime >= oldTime) {
 				return res.status(400).json({
