@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { config } from "../config/Constants";
 
 const AddTrackForm = () => {
-	const API_URL = config.API_BASE_URL + "/tracks/";
+	const API_URL = "/tracks/";
 	const [track, setTrack] = useState("");
 	const [game, setGame] = useState("");
 	const [car, setCar] = useState("");

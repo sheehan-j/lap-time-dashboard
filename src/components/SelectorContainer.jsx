@@ -11,9 +11,6 @@ const SelectorContainer = ({ dashboardRunning, setDashboardRunning }) => {
 			<Link to="/add" style={{ textDecoration: "none" }}>
 				<Selector selectorText={"Add Data"} />
 			</Link>
-			<Link to="/view" style={{ textDecoration: "none" }}>
-				<Selector selectorText={"View Data"} />
-			</Link>
 			<DashboardToggler
 				dashboardRunning={dashboardRunning}
 				setDashboardRunning={setDashboardRunning}

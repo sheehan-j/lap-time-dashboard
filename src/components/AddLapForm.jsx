@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { config } from "../config/Constants";
 
 const AddLapForm = () => {
-	const API_URL = config.API_BASE_URL + "/times/";
+	const API_URL = "/times/";
 	const [track, setTrack] = useState("");
 	const [game, setGame] = useState("");
 	const [car, setCar] = useState("");
@@ -49,17 +48,7 @@ const AddLapForm = () => {
 		// Handle possible responses
 		switch (response.status) {
 			case 400:
-				if (
-					result.message ===
-					"You can only upload a lap time that is faster than your existing lap time for this track."
-				) {
-					window.alert(result.message);
-				} else {
-					window.alert(
-						result.message +
-							" You can check the View Data screen for existing tracks and drivers in case you might be typing something incorrectly."
-					);
-				}
+				window.alert(result.message);
 				break;
 			case 500:
 				window.alert("Internal server error. Please try again later.");

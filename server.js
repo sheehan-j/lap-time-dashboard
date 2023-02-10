@@ -22,13 +22,10 @@ app.use(express.json());
 app.use("/", express.static(path.join(__dirname, "build")));
 
 // Routes
+app.use("/", require("./src/routes/root"));
 app.use("/times", require("./src/routes/api/times"));
 app.use("/tracks", require("./src/routes/api/tracks"));
 app.use("/drivers", require("./src/routes/api/drivers"));
-
-app.get("*", (req, res) => {
-	res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 
 mongoose.connection.once("open", () => {
 	console.log("Connected to MongoDB.");
