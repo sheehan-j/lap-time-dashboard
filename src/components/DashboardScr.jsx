@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import DashboardReturnButton from "./DashboardReturnButton";
 import { Link } from "react-router-dom";
 import { config } from "../config/Constants";
+import DashboardShortCycleTimeButton from "./DashboardShortCycleTimeButton";
 
 const DashboardScr = ({
 	currTrack,
@@ -11,6 +12,8 @@ const DashboardScr = ({
 	setCurrDriver,
 	dataFade,
 	setDataFade,
+	cycleTime,
+	setCycleTime,
 }) => {
 	const [headerDataTrack, setHeaderDataTrack] = useState("");
 	const [headerDataDriver, setHeaderDataDriver] = useState("");
@@ -44,7 +47,7 @@ const DashboardScr = ({
 
 			setTimeout(() => {
 				setDataFade(false);
-			}, 1000);
+			}, 600);
 		};
 
 		// Create asynchronous function call in this format because useEffect
@@ -133,6 +136,10 @@ const DashboardScr = ({
 			<Link to="/">
 				<DashboardReturnButton />
 			</Link>
+			<DashboardShortCycleTimeButton
+				cycleTime={cycleTime}
+				setCycleTime={setCycleTime}
+			/>
 			<DashboardSection
 				title={"Lap Times by Track"}
 				lapData={lapDataTrack}

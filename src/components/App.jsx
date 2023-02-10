@@ -14,6 +14,7 @@ function App() {
 	const [currDriver, setCurrDriver] = useState(1);
 	const [dashboardRunning, setDashboardRunning] = useState("Dashboard Off");
 	const [dataFade, setDataFade] = useState(false);
+	const [cycleTime, setCycleTime] = useState(10000);
 
 	useEffect(() => {
 		const updateCounts = async () => {
@@ -41,11 +42,11 @@ function App() {
 						return prevValue + 1;
 					});
 				}, 250);
-			}, 10000);
+			}, cycleTime);
 		}
 
 		return () => clearInterval(trackInterval);
-	}, [dashboardRunning, trackCount]);
+	}, [dashboardRunning, trackCount, cycleTime]);
 
 	useEffect(() => {
 		let driverInterval;
@@ -61,11 +62,11 @@ function App() {
 						return prevValue + 1;
 					});
 				}, 250);
-			}, 10000);
+			}, cycleTime);
 		}
 
 		return () => clearInterval(driverInterval);
-	}, [dashboardRunning, driverCount]);
+	}, [dashboardRunning, driverCount, cycleTime]);
 
 	useEffect(() => {
 		const monitorTrackCount = setInterval(async () => {
@@ -158,6 +159,8 @@ function App() {
 								setCurrDriver={setCurrDriver}
 								dataFade={dataFade}
 								setDataFade={setDataFade}
+								cycleTime={cycleTime}
+								setCycleTime={setCycleTime}
 							/>
 						}
 					/>

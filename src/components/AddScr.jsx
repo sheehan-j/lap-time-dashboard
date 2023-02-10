@@ -1,6 +1,6 @@
 import AddScrButtonContainer from "./AddScrButtonContainer";
 import AddScrFormContainer from "./AddScrFormContainer";
-import ReturnButton from "./ReturnButton";
+import AddScrReturnButton from "./AddScrReturnButton";
 import { useState } from "react";
 
 const AddScr = () => {
@@ -8,7 +8,7 @@ const AddScr = () => {
 
 	return (
 		<div className="addScreenContainer">
-			<ReturnButton />
+			<AddScrReturnButton />
 			<AddScrButtonContainer
 				selectedBtn={selectedBtn}
 				setSelectedBtn={setSelectedBtn}
