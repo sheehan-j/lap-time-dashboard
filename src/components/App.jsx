@@ -1,9 +1,11 @@
 import Layout from "./Layout";
 import SelectorScr from "./SelectorScr";
 import AddScr from "./AddScr";
+import ViewScr from "./ViewScr";
 import DashboardScr from "./DashboardScr";
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { config } from "../config/Constants";
 
 function App() {
 	const [trackCount, setTrackCount] = useState(0);
@@ -90,7 +92,7 @@ function App() {
 	}, []);
 
 	const getTrackCount = async () => {
-		const TRACK_COUNT_URL = "/tracks/count";
+		const TRACK_COUNT_URL = config.API_BASE_URL + "/tracks/count";
 
 		const response = await fetch(TRACK_COUNT_URL, {
 			method: "GET",
@@ -104,7 +106,7 @@ function App() {
 	};
 
 	const getDriverCount = async () => {
-		const TRACK_COUNT_URL = "/drivers/count";
+		const TRACK_COUNT_URL = config.API_BASE_URL + "/drivers/count";
 
 		const response = await fetch(TRACK_COUNT_URL, {
 			method: "GET",
@@ -141,6 +143,9 @@ function App() {
 							/>
 						}
 					/>
+				</Route>
+				<Route path="view">
+					<Route index element={<ViewScr />} />
 				</Route>
 				<Route path="dashboard">
 					<Route

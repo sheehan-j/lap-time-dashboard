@@ -153,7 +153,7 @@ const postTime = async (req, res) => {
 				existingLapSearch.seconds * 1000 +
 				existingLapSearch.milliseconds;
 
-			if (newTime > oldTime) {
+			if (newTime >= oldTime) {
 				return res.status(400).json({
 					message:
 						"You can only upload a lap time that is faster than your existing lap time for this track.",

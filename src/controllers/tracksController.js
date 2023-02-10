@@ -14,7 +14,11 @@ const getTrack = async (req, res) => {
 
 // TODO: Write getAllTracks function
 const getAllTracks = async (req, res) => {
-	console.log(req.params);
+	const result = await Track.find({}).select("track game car");
+	if (!result) {
+		return res.status(204).json({ message: "No tracks found." });
+	}
+	return res.status(200).json(result);
 };
 
 const getTrackCount = async (req, res) => {

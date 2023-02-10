@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { config } from "../config/Constants";
 
 const AddDriverForm = () => {
-	const API_URL = "/drivers/";
+	const API_URL = config.API_BASE_URL + "/drivers/";
 	const [driver, setDriver] = useState("");
 
 	const handleSubmit = async (event) => {
