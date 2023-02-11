@@ -7,7 +7,7 @@ const AddLapForm = () => {
 	const [game, setGame] = useState("");
 	const [car, setCar] = useState("");
 	const [driver, setDriver] = useState("");
-	const [date, setDate] = useState("");
+	// const [date, setDate] = useState("");
 	const [minutes, setMinutes] = useState("");
 	const [seconds, setSeconds] = useState("");
 	const [milliseconds, setMilliseconds] = useState("");
@@ -17,7 +17,7 @@ const AddLapForm = () => {
 		setGame("");
 		setCar("");
 		setDriver("");
-		setDate("");
+		// setDate("");
 		setMinutes("");
 		setSeconds("");
 		setMilliseconds("");
@@ -25,6 +25,8 @@ const AddLapForm = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+
+		const date = new Date().toLocaleDateString();
 
 		const lapTime = {
 			track: track,
@@ -112,14 +114,14 @@ const AddLapForm = () => {
 				onChange={(e) => setDriver(e.target.value)}
 			/>
 
-			<label className="addScreenFormLabel">Date</label>
+			{/* <label className="addScreenFormLabel">Date</label>
 			<input
 				className="addScreenFormInput"
 				type="text"
 				value={date}
 				placeholder="mm/dd/yyyy"
 				onChange={(e) => setDate(e.target.value)}
-			/>
+			/> */}
 
 			<label className="addScreenFormLabel">Time</label>
 			<div className="timeInputGroup">

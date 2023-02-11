@@ -203,7 +203,6 @@
 }
 
 .dashboardReturnButton {
-	all: unset;
 	font-family: "Inter", sans-serif;
 	background-color: rgba(255, 255, 255, 0.1);
 	color: rgba(255, 255, 255, 0.75);
@@ -470,7 +469,7 @@
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
-		padding-top: 3.25rem; /* Add padding to make space for the absolute return button on mobile */
+		/* padding-top: 3.25rem; Add padding to make space for the absolute return button on mobile */
 	}
 
 	.addScreenContainer {
@@ -480,7 +479,7 @@
 	.selector,
 	.dashboardTogglerOn,
 	.dashboardTogglerOff {
-		width: 95%;
+		width: 85%;
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -514,16 +513,24 @@
 
 	.dashboardReturnButton {
 		opacity: 1;
-		left: 0;
-		right: 0;
+		position: relative;
 		width: 50%;
 		margin-left: auto;
 		margin-right: auto;
+		top: 0;
+		left: 0;
+		box-sizing: border-box;
+		margin-top: 1rem;
+		margin-bottom: 0.25rem;
 	}
 
 	/* Font Sizes */
+	.selectorText {
+		font-size: 1.5rem;
+	}
+
 	.dashboardTitle {
-		font-size: 2rem;
+		font-size: 1.5rem;
 		text-align: center;
 	}
 
