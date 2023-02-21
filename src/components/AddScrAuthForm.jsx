@@ -14,7 +14,7 @@ const AddScrAuthForm = ({ setAuthenticated }) => {
 	};
 
 	return (
-		<div class="addScreenFormContainer">
+		<div class="addScreenFormContainer" style={{ marginTop: 0 }}>
 			<form className="addScreenForm" onSubmit={handleSubmit}>
 				<label className="addScreenFormLabel">Passcode</label>
 				<input

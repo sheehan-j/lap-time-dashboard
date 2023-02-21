@@ -10,12 +10,12 @@ const AddScr = () => {
 
 	return (
 		<div className="addScreenContainer">
+			<AddScrReturnButton />
 			{!authenticated && (
 				<AddScrAuthForm setAuthenticated={setAuthenticated} />
 			)}
 			{authenticated && (
 				<>
-					<AddScrReturnButton />
 					<AddScrButtonContainer
 						selectedBtn={selectedBtn}
 						setSelectedBtn={setSelectedBtn}
